@@ -1,5 +1,6 @@
-#include "mainwindow.h"
+#include "textfilesmanager.h"
 #include "ui_mainwindow.h"
+#include "mainwindow.h"
 
 #include <QProgressBar>
 #include <QFileDialog>
@@ -11,11 +12,12 @@ static const QStringList filters = QStringList() << "*.txt" << "*.rtf" << "*.doc
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    mStatusLabel(new QLabel("Status:", this)),
+    mProgressBar(new QProgressBar(this)),
+    mFileManager(new TextFilesManager(this))
 {
     ui->setupUi(this);
-    mStatusLabel = new QLabel("Status:", this);
-    mProgressBar = new QProgressBar(this);
 
     ui->statusBar->addWidget(mStatusLabel);
     ui->statusBar->addWidget(mProgressBar);
@@ -37,13 +39,26 @@ void MainWindow::slotOpenTexts()
     if (dialog.result() == QFileDialog::Accepted)
     {
         QStringList dirs = dialog.selectedFiles();
-        QStringList files;
+        QFileInfoList files;
         for (QString &stringDir : dirs)
         {
             QDir dir(stringDir);
 
-            files.append(dir.entryList(filters, QDir::Files | QDir::NoDotAndDotDot));
+            files.append(dir.entryInfoList(filters, QDir::Files | QDir::NoDotAndDotDot));
         }
-        emit textFilesLoaded(files);
+        int mode = -1;
+        QString stringMode = ui->modesCombobox->currentText();
+        if (stringMode == "Symbols")
+        {
+            mode = TextFilesManager::Symbols;
+        }
+        else if (stringMode == "Letters")
+        {
+            mode = TextFilesManager::Letters;
+        }
+        //change with method
+        int nGramm = ui->nGrammCountLineEdit->text().toInt();
+        bool removeNumbers = !ui->includeNumbersCheckBox->isChecked();
+        mFileManager->slotTextFilesLoaded(files, nGramm, mode, removeNumbers);
     }
 }
