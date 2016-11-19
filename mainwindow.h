@@ -16,6 +16,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+signals:
+    void textFilesLoaded(const QStringList &fileNames);
+public slots:
+    void slotOpenTexts();
 
 private:
     Ui::MainWindow *ui;
