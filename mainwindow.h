@@ -7,6 +7,8 @@ namespace Ui {
 class MainWindow;
 }
 
+class QLabel;
+class QProgressBar;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -17,6 +19,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QProgressBar *mProgressBar;
+    QLabel *mStatusLabel;
 };
 
 #endif // MAINWINDOW_H
