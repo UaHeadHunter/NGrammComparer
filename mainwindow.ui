@@ -14,91 +14,130 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,0">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
     <item>
      <widget class="QTableView" name="tableView"/>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QFrame" name="frame">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="title">
-       <string>Actions</string>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QComboBox" name="actionComboBox">
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-           <property name="currentText">
-            <string>Абсолютна частота</string>
-           </property>
-           <property name="currentIndex">
-            <number>0</number>
-           </property>
-           <item>
-            <property name="text">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Actions</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QComboBox" name="actionComboBox">
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+            <property name="currentText">
              <string>Абсолютна частота</string>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Відносна частота</string>
+            <property name="currentIndex">
+             <number>0</number>
             </property>
-           </item>
-           <item>
+            <item>
+             <property name="text">
+              <string>Абсолютна частота</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Відносна частота</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Відхилення абс. част.</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Відхилення від. част.</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="actionButton">
             <property name="text">
-             <string>Відхилення абс. част.</string>
+             <string>PushButton</string>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Відхилення від. част.</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="actionButton">
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="includeZeroCheckBox">
-           <property name="text">
-            <string>include zeros?</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
+         <property name="title">
+          <string>GroupBox</string>
          </property>
-        </spacer>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QComboBox" name="comboBox"/>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="includeZeroCheckBox">
+            <property name="text">
+             <string>include zeros?</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+         <zorder>groupBox</zorder>
+         <zorder>includeZeroCheckBox</zorder>
+         <zorder>comboBox</zorder>
+         <zorder>verticalSpacer</zorder>
+        </widget>
        </item>
       </layout>
      </widget>
