@@ -1,14 +1,18 @@
 #ifndef TEXTPARSER_H
 #define TEXTPARSER_H
 
-#include <QString>
+#include <QChar>
 
 class TextParser
 {
 public:
-    explicit TextParser();
+    explicit TextParser(bool removeSymbols, bool removeNumbers);
 
-    static void  parseText(QString &text, bool removeSymbols, bool removeNumbers);
+    bool isSymbolAllowed(QChar symbol);
+
+private:
+    bool mRemoveSybmols;
+    bool mRemoveNumbers;
 };
 
 #endif // TEXTPARSER_H

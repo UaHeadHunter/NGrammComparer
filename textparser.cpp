@@ -1,7 +1,6 @@
 #include <textfilesmanager.h>
 #include "textparser.h"
 
-#include <QStringList>
 //think about future usage of regexp
 static const QStringList symbols = QStringList() << "," << ":" << ";" << "-" << "?"
                                                  << "!" << "." << "/" << "\\" << "|"
@@ -13,32 +12,18 @@ static const QStringList numbers = QStringList() << "1" << "2" << "3" << "4" << 
 
 static const QStringList notWritableConsts = QStringList() << "\n" << "\r" << "\t";
 
-TextParser::TextParser()
+TextParser::TextParser(bool removeSymbols, bool removeNumbers)
+    : mRemoveSybmols(removeSymbols),
+      mRemoveNumbers(removeNumbers)
 {
 }
 
-void TextParser::parseText(QString &text, bool removeSymbols, bool removeNumbers)
+bool TextParser::isSymbolAllowed(QChar symbol)
 {
-    QStringList symbolsToRemove = notWritableConsts;
-    if (removeSymbols)
+    if (!mRemoveSybmols && symbol >= 'a' && symbol <= 'z' && symbol >= 'A' && symbol <= 'Z'
+            || !mRemoveNumbers && symbol >= '0' && symbol <= '9')
     {
-        symbolsToRemove << symbols;
+        return true;
     }
-
-    if (removeNumbers)
-    {
-        symbolsToRemove << numbers;
-    }
-
-    for (int i = 0; i < text.length();)
-    {
-        if (symbolsToRemove.contains(QString(text[i])))
-        {
-            text.remove(i, 1);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    return false;
 }
