@@ -8,10 +8,16 @@ class TextModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit TextModel(QObject *parent = 0);
+    explicit TextModel(const QStringList& items, QAbstractTableModel *parent = 0);
+
+public slots:
+    void slotBuildModel(QList<QHash<QString, int>> texts);
 
 private:
-    QList<TextItem*> mData;
+    void
+
+private:
+    QMap<QString, QList<TextItem*>> mData;
 };
 
 #endif // TEXTMODEL_H
