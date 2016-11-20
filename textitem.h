@@ -5,29 +5,18 @@
 
 struct TextItem
 {
-public:
-    explicit TextItem(QString nGramm, int absFreq, double relFreq, double devAbsFreq,
-                      double devRelFreq, double arithMean, double quadMean)
-        : mNGramm(nGramm),
-          mAbsFreq(absFreq),
+    explicit TextItem(int absFreq, double relFreq, double devAbsFreq, double devRelFreq)
+        : mAbsFreq(absFreq),
           mRelFreq(relFreq),
           mDevAbsFreq(devAbsFreq),
-          mDevRelFreq(devRelFreq),
-          mArithMean(arithMean),
-          mQuadMean(quadMean)
+          mDevRelFreq(devRelFreq)
     {
     }
-
-private:
-    QString mNGramm;
 
     int mAbsFreq;
     double mRelFreq;
     double mDevAbsFreq;
     double mDevRelFreq;
-
-    double mArithMean;
-    double mQuadMean;
 };
 
 #endif // TEXTITEM_H
