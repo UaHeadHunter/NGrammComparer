@@ -15,10 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     textfilesmanager.cpp \
-    textparser.cpp
+    textparser.cpp \
+    textmodel.cpp
 
 HEADERS  += mainwindow.h \
     textfilesmanager.h \
-    textparser.h
+    textparser.h \
+    textmodel.h \
+    textitem.h
 
 FORMS    += mainwindow.ui
