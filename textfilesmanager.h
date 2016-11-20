@@ -22,6 +22,7 @@ public slots:
                              int mode, bool includeNumbers);
 private:
     QList<QHash<QString, int>> mTextWords;
+    QStringList mAllWords;
 };
 
 #endif // TEXTFILESMANAGER_H

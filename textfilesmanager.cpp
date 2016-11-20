@@ -8,10 +8,9 @@ TextFilesManager::TextFilesManager(QObject *parent) : QObject(parent)
 {
 
 }
-void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int nGrammSize, int mode,
-                                           bool includeNumbers)
+void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int nGrammSize,
+                                           int mode, bool includeNumbers)
 {
-    int textCount = 0;
     QHash<QString, int> dictionary;
     for (const QFileInfo& fileName: fileNames)
     {
@@ -24,9 +23,15 @@ void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int n
             for (int i = 0 ; i < text.length() - nGrammSize; ++i)
             {
                 QString nGramm;
-                for (int n = i; nGramm.count() != nGrammSize; )
+                for (int n = i; n < i + nGrammSize; )
                 {
+                    if (n >= text.length())
+                    {
+                        break;
+                    }
+
                     QChar symbol = text.at(n).toLower();
+                    Q_ASSERT(symbol.isSymbol());
                     if (parser.isSymbolAllowed(symbol))
                     {
                         nGramm.append(symbol);
@@ -38,8 +43,6 @@ void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int n
                     }
                 }
 
-                qDebug() << nGramm;
-
                 if (dictionary.contains(nGramm))
                 {
                     ++dictionary[nGramm];
@@ -50,7 +53,7 @@ void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int n
                 }
             }
         }
-        ++textCount;
+        mTextWords.append(dictionary);
+        qDebug() << dictionary;
     }
-    qDebug() << dictionary;
 }
