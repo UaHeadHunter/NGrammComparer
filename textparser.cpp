@@ -20,10 +20,11 @@ TextParser::TextParser(bool removeSymbols, bool removeNumbers)
 
 bool TextParser::isSymbolAllowed(QChar symbol)
 {
-    if (!mRemoveSybmols && symbol >= 'a' && symbol <= 'z' && symbol >= 'A' && symbol <= 'Z'
-            || !mRemoveNumbers && symbol >= '0' && symbol <= '9')
+    if (mRemoveSybmols && !symbol.isLetter() && !symbol.isSpace()
+            || mRemoveNumbers && symbol.isDigit()
+            || notWritableConsts.contains(symbol))
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
