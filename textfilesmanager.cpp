@@ -11,6 +11,7 @@ TextFilesManager::TextFilesManager(QObject *parent) : QObject(parent)
 void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int nGrammSize,
                                            int mode, bool includeNumbers)
 {
+    mAllWords.clear();
     QHash<QString, int> dictionary;
     for (const QFileInfo& fileName: fileNames)
     {
@@ -31,7 +32,7 @@ void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int n
                     }
 
                     QChar symbol = text.at(n).toLower();
-                    Q_ASSERT(symbol.isSymbol());
+
                     if (parser.isSymbolAllowed(symbol))
                     {
                         nGramm.append(symbol);
@@ -50,6 +51,10 @@ void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int n
                 else
                 {
                     dictionary.insert(nGramm, 1);
+                }
+                if (!mAllWords.contains(nGramm))
+                {
+                    mAllWords.append(nGramm);
                 }
             }
         }
