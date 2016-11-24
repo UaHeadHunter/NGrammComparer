@@ -5,8 +5,8 @@
 
 #include <QProgressBar>
 #include <QFileDialog>
+#include <QTextStream>
 #include <QLabel>
-#include <QDebug>
 #include <QDir>
 
 static const QStringList filters = QStringList() << "*.txt" << "*.rtf" << "*.doc" << "*.docx";
@@ -36,6 +36,7 @@ MainWindow::~MainWindow()
 }
 void MainWindow::slotOpenTexts()
 {
+    ui->mainGroupBox->setEnabled(true);
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::DirectoryOnly);
     dialog.exec();

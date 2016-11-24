@@ -40,7 +40,10 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="mainGroupBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string>Розмір н-грамми</string>
          </property>
@@ -159,13 +162,13 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Файл</string>
     </property>
     <addaction name="actionOpen_text"/>
    </widget>
    <widget class="QMenu" name="menuActions">
     <property name="title">
-     <string>Actions</string>
+     <string>Дії</string>
     </property>
    </widget>
    <addaction name="menuFile"/>
@@ -174,7 +177,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_text">
    <property name="text">
-    <string>Open text</string>
+    <string>Відкрити текст</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
