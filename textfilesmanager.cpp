@@ -1,64 +1,73 @@
 #include "textfilesmanager.h"
 #include "textparser.h"
+#include "textmodel.h"
 
 #include <QFile>
-#include <QDebug>
 
-TextFilesManager::TextFilesManager(QObject *parent) : QObject(parent)
+TextFilesManager::TextFilesManager(QObject *parent)
+    : QObject(parent),
+      mModel(new TextModel(this))
 {
 
 }
-void TextFilesManager::slotTextFilesLoaded(const QFileInfoList &fileNames, int nGrammSize,
-                                           int mode, bool includeNumbers)
+
+void TextFilesManager::slotTextFilesLoaded(QStringList &texts, int nGrammSize,
+                                           int mode, bool includeNumbers, int displayMode)
 {
     mAllWords.clear();
-    QHash<QString, int> dictionary;
-    for (const QFileInfo& fileName: fileNames)
+    mModel->slotClear();
+    mTextWords.clear();
+    mModel->setMode(displayMode);
+
+    TextParser parser(mode == Letters, includeNumbers);
+
+    for (QString& text: texts)
     {
-        QFile file(fileName.filePath());
-        if (file.open(QFile::ReadOnly))
+        QHash<QString, int> dictionary;
+        for (int i = 0 ; i < text.length() - nGrammSize; ++i)
         {
-            QString text = file.readAll();
-            TextParser parser(mode == Letters, includeNumbers);
-
-            for (int i = 0 ; i < text.length() - nGrammSize; ++i)
+            QString nGramm;
+            for (int n = i; n < i + nGrammSize; )
             {
-                QString nGramm;
-                for (int n = i; n < i + nGrammSize; )
+                if (n >= text.length())
                 {
-                    if (n >= text.length())
-                    {
-                        break;
-                    }
-
-                    QChar symbol = text.at(n).toLower();
-
-                    if (parser.isSymbolAllowed(symbol))
-                    {
-                        nGramm.append(symbol);
-                        ++n;
-                    }
-                    else
-                    {
-                        text.remove(n, 1);
-                    }
+                    break;
                 }
 
-                if (dictionary.contains(nGramm))
+                QChar symbol = text.at(n).toLower();
+
+                if (parser.isSymbolAllowed(symbol))
                 {
-                    ++dictionary[nGramm];
+                    nGramm.append(symbol);
+                    ++n;
                 }
                 else
                 {
-                    dictionary.insert(nGramm, 1);
+                    text.remove(n, 1);
                 }
-                if (!mAllWords.contains(nGramm))
-                {
-                    mAllWords.append(nGramm);
-                }
+            }
+
+            if (dictionary.contains(nGramm))
+            {
+                ++dictionary[nGramm];
+            }
+            else
+            {
+                dictionary.insert(nGramm, 1);
+            }
+            if (!mAllWords.contains(nGramm))
+            {
+                mAllWords.append(nGramm);
             }
         }
         mTextWords.append(dictionary);
-        qDebug() << dictionary;
     }
+
+    mModel->slotAddWords(mAllWords);
+    mModel->slotBuildModel(mTextWords);
+}
+
+TextModel *TextFilesManager::model() const
+{
+    return mModel;
 }
