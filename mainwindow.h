@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+
 namespace Ui {
 class MainWindow;
 }
@@ -19,14 +20,18 @@ public:
     ~MainWindow();
 signals:
     void textFilesLoaded(const QStringList &fileNames, int mode, bool includeNumbers);
-public slots:
+
+private slots:
     void slotOpenTexts();
+    void slotNGrammButtonClicked();
 
 private:
     Ui::MainWindow *ui;
     QProgressBar *mProgressBar;
     QLabel *mStatusLabel;
     TextFilesManager *mFileManager;
+    QStringList mFiles;
+    int mMode;
 };
 
 #endif // MAINWINDOW_H
